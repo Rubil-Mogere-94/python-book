@@ -2133,3 +2133,39 @@ Ramalho's *Fluent Python* provides the definitive guide to `async` and `await`.
 
 ### 8.4 Coroutines vs. Generators
 Lutz explains the evolution of generators into coroutines. A generator produces data; a coroutine consumes it.
+
+# Part IV: The Modern Frontier (Python 3.13, 3.14, and Beyond)
+
+As we enter 2026, Python has undergone its most significant architectural transformation since the 2.x to 3.x transition. This part covers the bleeding-edge developments that define modern high-performance Python engineering.
+
+### Chapter 13: Free-Threaded Python and the End of the GIL
+For decades, the Global Interpreter Lock (GIL) was the bottleneck for parallel Python. As of Python 3.14, **Free-threaded CPython** is officially supported.
+*   **PEP 703 & 779**: These proposals laid the groundwork for making the GIL optional. You can now run Python in a mode where the GIL is disabled, allowing true multi-core parallelism for CPU-bound tasks.
+*   **Biased Reference Counting**: To maintain thread safety without the GIL, Python 3.13+ uses "Biased Reference Counting." This reduces the overhead of atomic operations by tracking which thread "owns" an object.
+*   **Mimalloc**: The integration of Microsoft's `mimalloc` memory allocator provides the scalable thread-safe allocation required for a GIL-less world.
+
+### Chapter 14: The Experimental JIT and New Interpreter Design
+Python is finally getting a Just-In-Time (JIT) compiler.
+*   **The Copy-and-Patch JIT**: Introduced experimentally in 3.13, this JIT generates machine code by "patching" together pre-compiled C code templates. It’s a lightweight alternative to massive JITs like V8.
+*   **The Tail-Call Interpreter**: Python 3.14 introduces a new interpreter loop that uses tail calls instead of a giant `switch` statement. This improves branch prediction and allows for better CPU pipelining.
+*   **Incremental Garbage Collection**: The GC now operates in smaller increments, drastically reducing "stop-the-world" pauses in large applications.
+
+### Chapter 15: Zero-Overhead Debugging and Advanced Introspection
+Debugging in 2026 is safer and more powerful than ever.
+*   **PEP 768 (External Debugger Interface)**: Allows profilers and debuggers to attach to a running Python process with zero overhead. You can now inspect a production server without slowing it down.
+*   **Asyncio Task Trees**: New built-in tools allow you to visualize the relationship between async tasks as a tree or table, making it easy to spot deadlocks or "leaked" tasks.
+
+### Chapter 16: The Tooling Revolution: UV, Ruff, and Polars
+The "standard" Python toolchain has been rewritten in Rust for extreme performance.
+*   **UV**: A single tool that replaces `pip`, `pip-tools`, `venv`, and `poetry`. It is 10-100x faster than previous tools.
+*   **Ruff**: An extremely fast Python linter and formatter that replaces `flake8`, `isort`, `black`, and dozens of other plugins.
+*   **Polars**: While `pandas` is the classic, `polars` is the modern choice for high-performance data processing, leveraging multi-threading and query optimization.
+
+### Chapter 17: Deferred Evaluation of Annotations (PEP 649)
+As of Python 3.14, type annotations are deferred by default.
+*   **The Benefit**: Drastically improved startup time for large projects and easier handling of circular imports. Annotations are no longer evaluated when the module is loaded, but only when a type-checker or runtime library (like Pydantic) requests them.
+
+---
+
+## Conclusion: The Path to Transcendence
+Python in 2026 is no longer just a "scripting language." With true parallelism, JIT compilation, and a hyper-fast toolchain, it has become the primary language for both high-level AI orchestration and low-level system performance. The journey from beginner to expert never truly ends; it merely scales.
