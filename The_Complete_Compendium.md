@@ -89,6 +89,37 @@ finally:
     print("This always executes.")
 ```
 
+### Chapter 8: The Standard Library Powerhouse
+Python's "Batteries Included" philosophy means you rarely need external libraries for core tasks.
+*   **`collections`**: Beyond basic dicts and lists. Use `namedtuple` for readable records, `defaultdict` for automatic initialization, and `Counter` for frequency counts.
+*   **`itertools`**: The toolset for efficient looping. `chain`, `cycle`, `islice`, and `permutations` allow for memory-efficient data processing.
+*   **`pathlib`**: Modern, object-oriented filesystem paths. Replaces the older `os.path`.
+*   **`datetime`**: Handling timezones and arithmetic. Always use `timezone-aware` objects to avoid common bugs.
+
+### Chapter 9: Functional Programming Patterns
+While Python is primarily object-oriented, it borrows heavily from functional languages.
+*   **Lambdas**: Anonymous, one-line functions. `square = lambda x: x**2`.
+*   **Map, Filter, and Reduce**: Functional primitives for transforming collections. (Note: Slatkin prefers comprehensions for readability).
+*   **Higher-Order Functions**: Functions that accept or return other functions. This is the basis for decorators.
+
+### Chapter 10: The Professional Workflow
+Mastering the language is only half the battle; mastering the ecosystem is the other.
+*   **Environment Management**: Use `venv` or `conda` to isolate project dependencies. Never install packages into your global Python environment.
+*   **Dependency Management**: Move beyond `requirements.txt` to `pyproject.toml` using tools like `Poetry` or `uv`.
+*   **Static Analysis**: Use `flake8` for style, `black` for formatting, and `mypy` for type checking. This ensures your code is robust before it even runs.
+
+### Chapter 11: Pythonic Design Patterns
+Design patterns in Python often look different than in languages like Java.
+*   **The Strategy Pattern**: Often implemented simply by passing a function as an argument.
+*   **The Singleton Pattern**: Usually achieved by using a module-level variable or a decorator, rather than complex class structures.
+*   **The Factory Pattern**: Using class methods or simple functions to encapsulate object creation logic.
+
+### Chapter 12: Advanced Type Systems (Protocols & Generics)
+Modern Python leverages the type system for more than just documentation.
+*   **Protocols (Structural Subtyping)**: Define an interface based on *what an object can do* rather than what it inherits from. Similar to Go's interfaces.
+*   **Generics**: Use `TypeVar` and `Generic` to write code that works with multiple types while maintaining type safety.
+*   **NewType**: Create distinct types for clearer code (e.g., `UserId = NewType('UserId', int)`).
+
 ---
 
 # Part III: The Expert (Deep Internals and Idiomatic Patterns)
@@ -1877,7 +1908,7 @@ At the heart of CPython is a massive `switch` statement inside a `while` loop. T
 Every time you call a function, Python creates a **Frame Object**. This object holds:
 1.  **Local Variables**: Stored in an array for fast access.
 2.  **The Value Stack**: Where intermediate results (like the numbers in `1 + 2`) are pushed and popped.
-3.  **The Codea Object**: The immutable bytecode and constants.
+3.  **The Code Object**: The immutable bytecode and constants.
 
 ### 2.3 Stack Overflow vs. Recursion Limit
 When people ask on Stack Overflow why they get a `RecursionError`, they are hitting the safety limit of the frame stack. You can increase this with `sys.setrecursionlimit()`, but you risk a "Hard Crash" (Segfault) if you exceed the actual C stack of the operating system.
